@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.filecoin.mapper.FilAddressMapper">
+    <resultMap id="BaseResultMap" type="com.eth.filecoin.entity.FilAddress">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="user_id" jdbcType="VARCHAR" property="userId"/>
+        <result column="balance" jdbcType="DECIMAL" property="balance"/>
+        <result column="nonce" jdbcType="BIGINT" property="nonce"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+        <result column="private_key" jdbcType="VARCHAR" property="privateKey"/>
+        <result column="call_back_url" jdbcType="VARCHAR" property="callBackUrl"/>
+        <result column="address_type" jdbcType="BIT" property="addressType"/>
+        <result column="locked" jdbcType="BIT" property="locked"/>
+        <result column="status" jdbcType="BIT" property="status"/>
+        <result column="state" jdbcType="CHAR" property="state"/>
+        <result column="created" jdbcType="TIMESTAMP" property="created"/>
+        <result column="updated" jdbcType="TIMESTAMP" property="updated"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , user_id, balance, nonce, address, private_key,call_back_url, address_type, locked, status,
+    state, created, updated
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fil_address
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="selectByAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from fil_address
+        where address = #{address,jdbcType=VARCHAR}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+        delete
+        from fil_address
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <insert id="insert" parameterType="com.eth.filecoin.entity.FilAddress">
+        insert into fil_address (id, user_id, balance,
+                                 nonce, address, private_key, call_back_url,
+                                 address_type, locked, status, state,
+                                 created, updated)
+        values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{balance,jdbcType=DECIMAL},
+                #{nonce,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{privateKey,jdbcType=VARCHAR},
+                #{callBackUrl},
+                #{addressType,jdbcType=BIT}, #{locked,jdbcType=BIT}, #{status,jdbcType=BIT}, #{state,jdbcType=CHAR},
+                #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.eth.filecoin.entity.FilAddress">
+        insert into fil_address
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="balance != null">
+                balance,
+            </if>
+            <if test="nonce != null">
+                nonce,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="privateKey != null">
+                private_key,
+            </if>
+            <if test="callBackUrl != null">
+                call_back_url,
+            </if>
+            <if test="addressType != null">
+                address_type,
+            </if>
+            <if test="locked != null">
+                locked,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="state != null">
+                state,
+            </if>
+            <if test="created != null">
+                created,
+            </if>
+            <if test="updated != null">
+                updated,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null">
+                #{balance,jdbcType=DECIMAL},
+            </if>
+            <if test="nonce != null">
+                #{nonce,jdbcType=BIGINT},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="privateKey != null">
+                #{privateKey,jdbcType=VARCHAR},
+            </if>
+            <if test="callBackUrl != null">
+                #{callBackUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="addressType != null">
+                #{addressType,jdbcType=BIT},
+            </if>
+            <if test="locked != null">
+                #{locked,jdbcType=BIT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=BIT},
+            </if>
+            <if test="state != null">
+                #{state,jdbcType=CHAR},
+            </if>
+            <if test="created != null">
+                #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                #{updated,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.eth.filecoin.entity.FilAddress">
+        update fil_address
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="balance != null">
+                balance = #{balance,jdbcType=DECIMAL},
+            </if>
+            <if test="nonce != null">
+                nonce = #{nonce,jdbcType=BIGINT},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="privateKey != null">
+                private_key = #{privateKey,jdbcType=VARCHAR},
+            </if>
+            <if test="callBackUrl != null">
+                call_back_url = #{callBackUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="addressType != null">
+                address_type = #{addressType,jdbcType=BIT},
+            </if>
+            <if test="locked != null">
+                locked = #{locked,jdbcType=BIT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=BIT},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=CHAR},
+            </if>
+            <if test="created != null">
+                created = #{created,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updated != null">
+                updated = #{updated,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.eth.filecoin.entity.FilAddress">
+        update fil_address
+        set user_id       = #{userId,jdbcType=VARCHAR},
+            balance       = #{balance,jdbcType=DECIMAL},
+            nonce         = #{nonce,jdbcType=BIGINT},
+            address       = #{address,jdbcType=VARCHAR},
+            private_key   = #{privateKey,jdbcType=VARCHAR},
+            call_back_url = #{callBackUrl,jdbcType=VARCHAR},
+            address_type  = #{addressType,jdbcType=BIT},
+            locked        = #{locked,jdbcType=BIT},
+            status        = #{status,jdbcType=BIT},
+            state         = #{state,jdbcType=CHAR},
+            created       = #{created,jdbcType=TIMESTAMP},
+            updated       = #{updated,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

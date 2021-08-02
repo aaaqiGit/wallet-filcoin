@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!--
+    说明：
+      1. 文件的命名和加载顺序有关
+         logback.xml早于application.yml加载，logback-spring.xml晚于application.yml加载
+         如果logback配置需要使用application.yml中的属性，需要命名为logback-spring.xml
+      2. logback使用application.yml中的属性
+         使用springProperty才可使用application.yml中的值 可以设置默认值
+    -->
+
+    <springProperty scope="context" name="LOG_PATH" source="logback.path"/>
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+    <springProperty scope="context" name="springProfile" source="spring.profiles.active"/>
+
+    <property name="STDOUT_PATTERN"
+              value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(-%5p) %clr(--){faint} %clr(%-40.40logger{39}){cyan} %clr(#%-5line) %clr(%X{traceId:-}){magenta} %clr(%thread{40}){magenta} %clr(:){faint} %clr(%mdc{requestId}){magenta} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
+    <property name="FILE_PATTERN"
+              value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [${springAppName:-}-${springProfile:-}] [%X{traceId:-}] [%thread %logger{40}] [%message] %exception{full} %n"/>
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,%i索引【从数字0开始递增】,,, -->
+    <!-- appender是configuration的子节点，是负责写日志的组件。 -->
+    <!-- ConsoleAppender：把日志输出到控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${STDOUT_PATTERN}
+            </pattern>
+            <!-- 控制台也要使用UTF-8，不要使用GBK，否则会中文乱码 -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <!-- 使用json格式保存日志文件 -->
+    <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${springAppName}-common.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 活动文件的名字会根据fileNamePattern的值，每隔一段时间改变一次 -->
+            <!-- 文件名：log/${springAppName}.2017-12-05.0.log -->
+            <fileNamePattern>${LOG_PATH}/${springAppName}-common.%d.%i.log</fileNamePattern>
+            <!-- 每产生一个日志文件，该日志文件的保存期限为30天 -->
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!-- maxFileSize:这是活动文件的大小，默认值是10MB，测试时可改成1KB看效果 -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${FILE_PATTERN}</pattern>
+            <!-- 控制台也要使用UTF-8，不要使用GBK，否则会中文乱码 -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
+    <!-- com.liyan为根包，也就是只要是发生在这个根包下面的所有日志操作行为的账户都是DEBUG -->
+    <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
+    <logger name="io" level="WARN"/>
+    <logger name="org" level="WARN"/>
+    <logger name="javax" level="WARN"/>
+    <logger name="com.netflix" level="WARN"/>
+    <logger name="com.ctrip" level="WARN"/>
+    <logger name="com.aliyun" level="WARN"/>
+    <logger name="com.alibaba" level="WARN"/>
+    <logger name="springfox" level="WARN"/>
+    <logger name="com.baomidou" level="WARN"/>
+
+    <springProfile name="dev">
+        <logger name="com.eth.filecoin" level="DEBUG"/>
+        <root level="DEBUG">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="LOG_FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="local">
+        <logger name="com.eth.filecoin" level="INFO"/>
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="LOG_FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="pre">
+        <logger name="com.eth.filecoin" level="INFO"/>
+        <root level="INFO">
+            <appender-ref ref="STDOUT"/>
+            <appender-ref ref="LOG_FILE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="com.eth.filecoin" level="INFO"/>
+        <root level="INFO">
+            <appender-ref ref="LOG_FILE"/>
+        </root>
+    </springProfile>
+
+</configuration>

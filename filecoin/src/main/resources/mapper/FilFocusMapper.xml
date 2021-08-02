@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.filecoin.mapper.FilFocusMapper">
+  <resultMap id="BaseResultMap" type="com.eth.filecoin.entity.FilFocus">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="from_address" jdbcType="VARCHAR" property="fromAddress" />
+    <result column="to_address" jdbcType="VARCHAR" property="toAddress" />
+    <result column="count" jdbcType="DECIMAL" property="count" />
+    <result column="gas_fee_cap" jdbcType="VARCHAR" property="gasFeeCap" />
+    <result column="gas_premium" jdbcType="VARCHAR" property="gasPremium" />
+    <result column="gas_limit" jdbcType="BIGINT" property="gasLimit" />
+    <result column="gas_price" jdbcType="DECIMAL" property="gasPrice" />
+    <result column="gas_hash" jdbcType="VARCHAR" property="gasHash" />
+    <result column="gas_state" jdbcType="INTEGER" property="gasState" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="hash" jdbcType="VARCHAR" property="hash" />
+    <result column="area" jdbcType="INTEGER" property="area" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="locked" jdbcType="BIT" property="locked" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, from_address, to_address, count, gas_fee_cap, gas_premium, gas_limit, gas_price, 
+    gas_hash, gas_state, state, hash, area, remark, locked, status, created, updated
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fil_focus
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByFromAddress" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from fil_focus
+    where from_address = #{fromAddress,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from fil_focus
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.eth.filecoin.entity.FilFocus">
+    insert into fil_focus (id, from_address, to_address, 
+      count, gas_fee_cap, gas_premium, 
+      gas_limit, gas_price, gas_hash, 
+      gas_state, state, hash, 
+      area, remark, locked, status, 
+      created, updated)
+    values (#{id,jdbcType=VARCHAR}, #{fromAddress,jdbcType=VARCHAR}, #{toAddress,jdbcType=VARCHAR}, 
+      #{count,jdbcType=DECIMAL}, #{gasFeeCap}, #{gasPremium},
+      #{gasLimit}, #{gasPrice,jdbcType=DECIMAL}, #{gasHash,jdbcType=VARCHAR},
+      #{gasState,jdbcType=INTEGER}, #{state,jdbcType=INTEGER}, #{hash,jdbcType=VARCHAR}, 
+      #{area,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{locked,jdbcType=BIT}, #{status,jdbcType=BIT}, 
+      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eth.filecoin.entity.FilFocus">
+    insert into fil_focus
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fromAddress != null">
+        from_address,
+      </if>
+      <if test="toAddress != null">
+        to_address,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="gasFeeCap != null">
+        gas_fee_cap,
+      </if>
+      <if test="gasPremium != null">
+        gas_premium,
+      </if>
+      <if test="gasLimit != null">
+        gas_limit,
+      </if>
+      <if test="gasPrice != null">
+        gas_price,
+      </if>
+      <if test="gasHash != null">
+        gas_hash,
+      </if>
+      <if test="gasState != null">
+        gas_state,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="hash != null">
+        hash,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="locked != null">
+        locked,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAddress != null">
+        #{fromAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddress != null">
+        #{toAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=DECIMAL},
+      </if>
+      <if test="gasFeeCap != null">
+        #{gasFeeCap},
+      </if>
+      <if test="gasPremium != null">
+        #{gasPremium},
+      </if>
+      <if test="gasLimit != null">
+        #{gasLimit},
+      </if>
+      <if test="gasPrice != null">
+        #{gasPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gasHash != null">
+        #{gasHash,jdbcType=VARCHAR},
+      </if>
+      <if test="gasState != null">
+        #{gasState,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null">
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null">
+        #{locked,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eth.filecoin.entity.FilFocus">
+    update fil_focus
+    <set>
+      <if test="fromAddress != null">
+        from_address = #{fromAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddress != null">
+        to_address = #{toAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=DECIMAL},
+      </if>
+      <if test="gasFeeCap != null">
+        gas_fee_cap = #{gasFeeCap},
+      </if>
+      <if test="gasPremium != null">
+        gas_premium = #{gasPremium},
+      </if>
+      <if test="gasLimit != null">
+        gas_limit = #{gasLimit},
+      </if>
+      <if test="gasPrice != null">
+        gas_price = #{gasPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="gasHash != null">
+        gas_hash = #{gasHash,jdbcType=VARCHAR},
+      </if>
+      <if test="gasState != null">
+        gas_state = #{gasState,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null">
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="locked != null">
+        locked = #{locked,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eth.filecoin.entity.FilFocus">
+    update fil_focus
+    set from_address = #{fromAddress,jdbcType=VARCHAR},
+      to_address = #{toAddress,jdbcType=VARCHAR},
+      count = #{count,jdbcType=DECIMAL},
+      gas_fee_cap = #{gasFeeCap},
+      gas_premium = #{gasPremium},
+      gas_limit = #{gasLimit},
+      gas_price = #{gasPrice,jdbcType=DECIMAL},
+      gas_hash = #{gasHash,jdbcType=VARCHAR},
+      gas_state = #{gasState,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER},
+      hash = #{hash,jdbcType=VARCHAR},
+      area = #{area,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      locked = #{locked,jdbcType=BIT},
+      status = #{status,jdbcType=BIT},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

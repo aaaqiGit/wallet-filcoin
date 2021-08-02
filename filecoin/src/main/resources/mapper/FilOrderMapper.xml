@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.filecoin.mapper.FilOrderMapper">
+  <resultMap id="BaseResultMap" type="com.eth.filecoin.entity.FilOrder">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="from_address" jdbcType="VARCHAR" property="fromAddress" />
+    <result column="to_address" jdbcType="VARCHAR" property="toAddress" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="hash" jdbcType="VARCHAR" property="hash" />
+    <result column="is_sync" jdbcType="BIT" property="isSync" />
+    <result column="sync_count" jdbcType="INTEGER" property="syncCount" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="currency" jdbcType="INTEGER" property="currency" />
+    <result column="locked" jdbcType="BIT" property="locked" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="state" jdbcType="CHAR" property="state" />
+    <result column="created" jdbcType="TIMESTAMP" property="created" />
+    <result column="updated" jdbcType="TIMESTAMP" property="updated" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, from_address, to_address, balance, hash, is_sync, sync_count, remark, currency, 
+    locked, status, state, created, updated
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fil_order
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectCid" parameterType="java.lang.String" resultType="com.eth.filecoin.entity.FilOrder">
+    select
+    <include refid="Base_Column_List" />
+    from fil_order
+    where hash = #{hash,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByFromAddress" parameterType="java.lang.String" resultType="com.eth.filecoin.entity.FilOrder">
+    select
+    <include refid="Base_Column_List" />
+    from fil_order
+    where from_address = #{from,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByTo" parameterType="java.lang.String" resultType="com.eth.filecoin.entity.FilOrder">
+    select
+    <include refid="Base_Column_List" />
+    from fil_order
+    where to_address = #{to,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from fil_order
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.eth.filecoin.entity.FilOrder">
+    insert into fil_order (id, from_address, to_address, 
+      balance, hash, is_sync, 
+      sync_count, remark, currency, 
+      locked, status, state, created, 
+      updated)
+    values (#{id,jdbcType=VARCHAR}, #{fromAddress,jdbcType=VARCHAR}, #{toAddress,jdbcType=VARCHAR}, 
+      #{balance,jdbcType=DECIMAL}, #{hash,jdbcType=VARCHAR}, #{isSync,jdbcType=BIT}, 
+      #{syncCount,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{currency,jdbcType=INTEGER}, 
+      #{locked,jdbcType=BIT}, #{status,jdbcType=BIT}, #{state,jdbcType=CHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.eth.filecoin.entity.FilOrder">
+    insert into fil_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="fromAddress != null">
+        from_address,
+      </if>
+      <if test="toAddress != null">
+        to_address,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="hash != null">
+        hash,
+      </if>
+      <if test="isSync != null">
+        is_sync,
+      </if>
+      <if test="syncCount != null">
+        sync_count,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="locked != null">
+        locked,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="updated != null">
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fromAddress != null">
+        #{fromAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddress != null">
+        #{toAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="hash != null">
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="isSync != null">
+        #{isSync,jdbcType=BIT},
+      </if>
+      <if test="syncCount != null">
+        #{syncCount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null">
+        #{locked,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=CHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.eth.filecoin.entity.FilOrder">
+    update fil_order
+    <set>
+      <if test="fromAddress != null">
+        from_address = #{fromAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="toAddress != null">
+        to_address = #{toAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="hash != null">
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="isSync != null">
+        is_sync = #{isSync,jdbcType=BIT},
+      </if>
+      <if test="syncCount != null">
+        sync_count = #{syncCount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        currency = #{currency,jdbcType=INTEGER},
+      </if>
+      <if test="locked != null">
+        locked = #{locked,jdbcType=BIT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=CHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null">
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.eth.filecoin.entity.FilOrder">
+    update fil_order
+    set from_address = #{fromAddress,jdbcType=VARCHAR},
+      to_address = #{toAddress,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DECIMAL},
+      hash = #{hash,jdbcType=VARCHAR},
+      is_sync = #{isSync,jdbcType=BIT},
+      sync_count = #{syncCount,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=INTEGER},
+      locked = #{locked,jdbcType=BIT},
+      status = #{status,jdbcType=BIT},
+      state = #{state,jdbcType=CHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
