@@ -75,16 +75,16 @@ public class TianXinFilecoinServiceImpl implements TianXinFilecoinService {
     @Autowired
     private FilTakeMapper filTakeMapper;
 
-    @Value("${tianxinURL}")
+//    @Value("${tianxinURL}")
     private String tianxinURL;
 
-    @Value("${tianxinLoginURL}")
+//    @Value("${tianxinLoginURL}")
     private String tianxinLoginURL;
 
-    @Value("${tianxinRechargeURL}")
+//    @Value("${tianxinRechargeURL}")
     private String tianxinRechargeURL;
 
-    @Value("${tianxinTakeURL}")
+//    @Value("${tianxinTakeURL}")
     private String tianxinTakeURL;
 
     /**
