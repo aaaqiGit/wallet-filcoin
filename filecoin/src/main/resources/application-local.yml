@@ -4,8 +4,8 @@ spring:
   application:
     name: filecoin
   datasource:
-    url:
-    username:
+    url: jdbc:mysql://127.0.0.1:3306/oms_filecon?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+    username: root
     password:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
@@ -96,4 +96,9 @@ filecoinUrl:
 filfoxUrl: https://filfox.info/api/v1/address/
 
 
-appCallbackURL:
+appCallbackURL: 1
+
+tianxinURL: 1
+tianxinLoginURL: 1
+tianxinRechargeURL: 1
+tianxinTakeURL: 1

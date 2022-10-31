@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.filecoin.mapper.StreetMapper">
+    
+    <resultMap type=" com.eth.filecoin.entity.Street" id="StreetResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="pid"    column="pid"    />
+    </resultMap>
+
+    <sql id="selectStreetVo">
+        select id, name, pid from street
+    </sql>
+
+</mapper>

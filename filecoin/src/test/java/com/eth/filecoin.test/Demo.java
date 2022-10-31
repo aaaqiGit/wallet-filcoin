@@ -26,6 +26,7 @@ import com.eth.filecoin.utils.CacheRedis;
 import com.eth.filecoin.utils.FileUtil;
 import com.eth.filecoin.utils.MD5Util;
 import com.eth.filecoin.utils.MD5Utils;
+
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.net.URI;
@@ -38,6 +39,8 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -55,7 +58,11 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
+
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import net.dreamlu.mica.core.utils.Base64Util;
+import net.dreamlu.mica.core.utils.BeanUtil;
 import net.dreamlu.mica.http.HttpRequest;
 import net.dreamlu.mica.http.ResponseSpec;
 import org.json.JSONException;
@@ -116,6 +123,7 @@ public class Demo {
 // address=地址&amount=币数量&hash=hash&orderId=订单 id&userId=用户 id&coin=币种&type=充值1&sgin=0783309e6b7f42a892182c529b6fdf76
 //        log.info("data:"+data);
 
+
         String sign = data + "&sign=" + "1111";
         log.info("sign:" + sign);
 
@@ -127,6 +135,13 @@ public class Demo {
 
         String encodeStr = Base64.getEncoder().encodeToString(data.getBytes(StandardCharsets.UTF_8));
         log.info("base64:" + encodeStr);
+
+
+        log.info("base64 -:" + Base64Util.encode(data));
+
+        String decode = Base64Util.decode(encodeStr);
+        log.info("解码：" + decode);
+
     }
 
     @Test
@@ -481,4 +496,53 @@ public class Demo {
     }
 
 
+    @Test
+    public void test009() throws Exception {
+        List<ObjectTest> list = new ArrayList<>();
+        ObjectTest object = new ObjectTest();
+        object.setAge("b");
+        object.setName("a");
+        object.setSex("1");
+        list.add(object);
+
+        ObjectTest object02 = new ObjectTest();
+        object02.setAge("bttttttttt");
+        object02.setName("atttttttt");
+        object02.setSex("1ttttttttt");
+        list.add(object02);
+        log.info("list: "+list);
+
+        String toJSONString = JSONObject.toJSONString(list);
+        log.info("toJSONString: "+toJSONString);
+
+        String secret = "db063decf3e32b6dads4647fc8a47j8u8";
+        long second = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+        log.info("");
+
+        String md5 = MD5Utils.md5(Base64Util.encode(  secret + second));
+
+        log.info("md5: " + md5);
+
+
+        String successful = HttpRequest.post("")
+                .addHeader("time", String.valueOf(second))
+                .addHeader("sign", md5)
+                .bodyJson(list)
+                .execute()
+                .onFailed(((request, e) -> {
+
+                }))
+                .onSuccessful((ResponseSpec::asString));
+
+        log.info(successful);
+
+    }
+
+
+    @Data
+    class ObjectTest {
+        private String name;
+        private String age;
+        private String sex;
+    }
 }

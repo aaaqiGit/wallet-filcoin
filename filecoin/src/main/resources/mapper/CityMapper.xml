@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.eth.filecoin.mapper.CityMapper">
+
+    <resultMap type=" com.eth.filecoin.entity.City" id="CityResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="pid"    column="pid"    />
+    </resultMap>
+
+    <sql id="selectCityVo">
+        select id, name, pid from city
+    </sql>
+
+    <select id="queryCitys" resultMap="CityResult">
+        <include refid="selectCityVo"/>
+        where pid = #{id}
+    </select>
+</mapper>

@@ -36,6 +36,7 @@ public class CommonController {
     @PostMapping("/{filId}/auth")
     public Result auth(@PathVariable String filId, @RequestBody AuthenRequest request) {
         String md5 = MD5Util.md5(FIL_ID + request.getTimestamp() + FIL_SECRET);
+
         if (filId.equals(FIL_ID) && request.getSign().equals(md5)) {
             String token = md5TokenGenerator.generate(FIL_ID, FIL_SECRET);
             String _token = FIL_TOKEN + FIL_ID + token;

@@ -1,4 +1,4 @@
-package com.eth.filecoin;
+package com.eth.filecoin.test;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -32,12 +32,11 @@ public class DemoMain {
 
 
 
-
 //        BigDecimal bd=new BigDecimal(fil).setScale(2,RoundingMode.HALF_UP);
 
 
         BigDecimal bigDecimal1 = filUtil("666510000000000000000");
-//        System.out.println(bigDecimal1);
+        System.out.println(bigDecimal1);
 
         System.out.println();
         String str = "shy say123456";
